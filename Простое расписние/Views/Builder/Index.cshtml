@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<Простое_расписние.Models.AT>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-controller="Builder" asp-action="Index">
+    <p>
+        Speciality: <input type="text" name="Speciality" />
+        Year: <input type="number" name="Year" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                пн
+            </th>
+            <th>
+                вт
+            </th>
+            <th>
+                ср
+            </th>
+            <th>
+                чт
+            </th>
+            <th>
+                пт
+            </th>
+            <th>
+                сб
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @for (var i = 0; i < 9; i++) 
+        {
+            <tr>
+                @for(var j = 0; j < 6; j++)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => Model
+                                 .Where(s => s.Number / 9 == j && s.Number % 9 == i)
+                                 .FirstOrDefault().Name);
+                        @Html.DisplayFor(modelItem => Model
+                                 .Where(s => s.Number / 9 == j && s.Number % 9 == i)
+                                 .FirstOrDefault().Lesson);
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
