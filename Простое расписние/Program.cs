@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Простое_расписние.Data;
+using Простое_расписние.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Простое_расписниеContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Простое_расписниеContext") /*?? throw new InvalidOperationException("Connection string 'Простое_расписниеContext' not found.")*/));
@@ -9,6 +12,15 @@ builder.Services.AddDbContext<Простое_расписниеContext>(options 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedDataATs.Initialize(services);
+    SeedDataLessons.Initialize(services);
+    SeedDataTeachers.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
