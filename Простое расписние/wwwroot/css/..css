@@ -18,28 +18,5 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
-
-}
-
-/*.ff {
-    text-align: center;*/
-}
-
-
-html {
-    background-color: #f3f2e8;
-}
-body {
-    background-color: #e2eaf1;
-}
-
-div{
-    background-color: #e6e6dc;
-}
-
-
-img.fff {
-    margin: 0 35em;
-    position: absolute;
+  margin-bottom: 60px;
 }

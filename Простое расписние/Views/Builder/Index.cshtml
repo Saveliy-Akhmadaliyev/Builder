@@ -1,16 +1,25 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model IEnumerable<Простое_расписние.Models.AT>
+@model Простое_расписние.Models.ATLessonViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<form asp-controller="Builder" asp-action="Index">
+<form asp-controller="Builder" asp-action="Index" method="get">
     <p>
         Speciality: <input type="text" name="Speciality" />
         Year: <input type="number" name="Year" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<form asp-controller="Builder" asp-action="Index" method="get">
+    <p>
+        <select asp-for="MyLesson" asp-items="Model.Lesson">
+            <option value="">All</option>
+        </select>
+
         <input type="submit" value="Filter" />
     </p>
 </form>
@@ -50,12 +59,10 @@
                 @for(var j = 0; j < 6; j++)
                 {
                     <td>
-                        @Html.DisplayFor(modelItem => Model
-                                 .Where(s => s.Number / 9 == j && s.Number % 9 == i)
-                                 .FirstOrDefault().Name);
-                        @Html.DisplayFor(modelItem => Model
-                                 .Where(s => s.Number / 9 == j && s.Number % 9 == i)
-                                 .FirstOrDefault().Lesson);
+                        @Html.DisplayFor(modelItem => Model.Subjects
+                                 .FirstOrDefault(s => s.Number / 9 == j && s.Number % 9 == i).Name);
+                        @Html.DisplayFor(modelItem => Model.Subjects
+                                 .FirstOrDefault(s => s.Number / 9 == j && s.Number % 9 == i).Lesson);
                     </td>
                 }
             </tr>
