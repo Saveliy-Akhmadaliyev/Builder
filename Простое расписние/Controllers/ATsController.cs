@@ -35,12 +35,27 @@ namespace Простое_расписние.Controllers
 
             var aT = await _context.AT
                 .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (aT == null)
             {
                 return NotFound();
             }
 
-            return View(aT);
+            var lesson = await _context.Lesson
+                .FirstOrDefaultAsync(p => aT.Name.Contains(p.Name));
+            var lector = await _context.Teacher
+                .FirstOrDefaultAsync(p => aT.Lector.Contains(p.Name));
+            var mentor = await _context.Teacher
+                .FirstOrDefaultAsync(p => aT.Mentor.Contains(p.Name));
+
+            var result = new InfoATViewModel()
+            {
+                AT = aT,
+                Lector = lector,
+                Lesson = lesson,
+                Mentor = mentor
+            };
+            return View(result);
         }
 
         // GET: ATs/Create

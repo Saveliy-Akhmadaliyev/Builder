@@ -9,19 +9,93 @@
 
 <form asp-controller="Builder" asp-action="Index" method="get">
     <p>
-        Speciality: <input type="text" name="Speciality" />
-        Year: <input type="number" name="Year" />
+        Speciality: <input type="text" name="Speciality" value="@Model.Speciality"/>
+        Year: <input type="number" name="Year" value="@Model.Year" />
         <input type="submit" value="Filter" />
     </p>
-</form>
-<form asp-controller="Builder" asp-action="Index" method="get">
-    <p>
-        <select asp-for="MyLesson" asp-items="Model.Lesson">
-            <option value="">All</option>
-        </select>
 
+    <h3>Выбери нухные предметы</h3>
+    <p>
+        @foreach(var item in Model.Lesson)
+        {
+            <label>
+                <input type="checkbox" name="MyLessonVM" value="@item.Text" checked="@Model.MyLessonVM?.Contains(item.Text)">
+                @item.Text
+            </label> <br />
+        }
         <input type="submit" value="Filter" />
     </p>
+
+    <h3>Отметьте треки на которые хотите попасть (если такие есть)</h3>
+    Посмотреть треки <input type="checkbox" value="true" name="bool1" /> 
+    <p>
+        @if (Model.Bool1)
+        {
+            @foreach (var item in Model.Track)
+            {
+                <label>
+                    <input type="checkbox" name="MyTrackVM" value="@item" checked="@(Model.MyTrackVM?.Contains(item))">
+                    @item
+                </label> <br />
+            }
+        }
+        else
+        {
+            @foreach (var item in Model.MyTrackVM)
+            {
+                <input type="hidden" name="MyTrackVM" value="@item" />
+            }
+        }
+        <input type="submit" value="Filter" />
+    </p>
+
+    <h3>Выбирете время свободное от учёбы</h3>
+    <p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        пн
+                    </th>
+                    <th>
+                        вт
+                    </th>
+                    <th>
+                        ср
+                    </th>
+                    <th>
+                        чт
+                    </th>
+                    <th>
+                        пт
+                    </th>
+                    <th>
+                        сб
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (var i = 2; i < 9; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.Name(i - 1 + " пара")
+                        </td>
+                        @for (var j = 0; j < 6; j++)
+                        {
+                            <td>
+                                <input type="checkbox" name="Time" value="@(j * 9 + i)" checked="@Model.Time.Contains(j * 9 + i)" />
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <input type="submit" value="Filter" />
+    </p>
+
 </form>
 
 <table class="table">
@@ -50,22 +124,33 @@
     </thead>
     <tbody>
 
-        @for (var i = 0; i < 9; i++) 
+        @for (var i = 1; i < 9; i++)
         {
             <tr>
                 <td>
-                    @Html.Name(i + " пара")
+                    @Html.Name(i - 1 + " пара")
                 </td>
-                @for(var j = 0; j < 6; j++)
+                @for (var j = 0; j < 6; j++)
                 {
                     <td>
-                        @Html.DisplayFor(modelItem => Model.Subjects
-                                 .FirstOrDefault(s => s.Number / 9 == j && s.Number % 9 == i).Name);
-                        @Html.DisplayFor(modelItem => Model.Subjects
-                                 .FirstOrDefault(s => s.Number / 9 == j && s.Number % 9 == i).Lesson);
+                        @foreach (var modelItem in Model.Subjects)
+                        {
+                            @if (modelItem.Number / 9 == j && modelItem.Number % 9 == i)
+                            {
+                                @if (!Model.DistinctSubject.Contains(modelItem.Name))
+                                {
+                                    <p>
+                                        <a asp-controller="ATs" asp-action="Details" asp-route-id="@modelItem.Id">
+                                            @modelItem.Name
+                                        </a>
+                                    </p>
+                                    Model.DistinctSubject.Add(modelItem.Name);
+                                }
+                            }
+                        }
                     </td>
                 }
             </tr>
-        }
+        }        
     </tbody>
 </table>

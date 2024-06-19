@@ -20,8 +20,7 @@ namespace Простое_расписние.Models
                     new Lesson
                     {
                         Name = "Музыка",
-                        Speciality = "НЕТ",
-                        Year = 0
+                        Speciality = "НЕТ"
                     }
                 );
                 context.SaveChanges();

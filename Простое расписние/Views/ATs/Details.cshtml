@@ -1,4 +1,4 @@
-﻿@model Простое_расписние.Models.AT
+﻿@model Простое_расписние.Models.InfoATViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,50 +11,44 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.AT.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            <a asp-controller="Lessons" asp-action="Details" asp-route-id="@Model.Lesson.Id">
+                @Html.DisplayFor(model => model.AT.Name)
+            </a>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Lesson)
+            @Html.DisplayNameFor(model => model.AT.Lector)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Lesson)
+            <a asp-controller="Teachers" asp-action="Details" asp-route-id="@Model.Lector.Id">
+                @Html.DisplayFor(model => model.AT.Lector)
+            </a>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Lector)
+            @Html.DisplayNameFor(model => model.AT.Mentor)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Lector)
+            <a asp-controller="Teachers" asp-action="Details" asp-route-id="@Model.Mentor.Id">
+                @Html.DisplayFor(model => model.AT.Mentor)
+            </a>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Mentor)
+            @Html.DisplayNameFor(model => model.AT.Place)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Mentor)
+            @Html.DisplayFor(model => model.AT.Place)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Number)
+            @Html.DisplayNameFor(model => model.AT.IsOnline)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Number)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Place)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Place)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsOnline)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsOnline)
+            @Html.DisplayFor(model => model.AT.IsOnline)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.AT.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
